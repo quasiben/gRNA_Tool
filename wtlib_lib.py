@@ -52,7 +52,10 @@ def get_wtlib_index():
             name, full_seq = [f.readline().strip() for i in range(2)]
             if name == "":
                 break
-            spacer = full_seq[1:21]
+
+            # offset because space in forward file
+            # is often preceded with N
+            spacer = full_seq[1:20]
 
             d[spacer] = (name, full_seq)
 

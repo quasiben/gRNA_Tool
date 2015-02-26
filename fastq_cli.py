@@ -34,10 +34,12 @@ def main():
     MIs = ["ATCACG", "CGATGT", "TTAGGC", "TGACCA"]
 
     for f_seq, r_seq in fr_lib.streaming_open(forward=forward_path, reverse=reverse_path):
+
         spacer = fr_lib.get_spacer(f_seq)
         barcode, mi = fr_lib.get_barcode_mi(r_seq)
+        spacer_lookup = spacer[1:] # offset because N precedes many spacers
 
-        if wtlib_dict.get(spacer):
+        if wtlib_dict.get(spacer_lookup):
 
             # skip if mi is invalid
             if mi not in MIs:
@@ -55,7 +57,9 @@ def main():
 
         for k, count in counter_dict.iteritems():
             spacer, barcode, mi = k.split("$")
-            wtLibname, full_seq = wtlib_dict[spacer]
+            spacer_lookup = spacer[1:] # offset because N precedes many spacers
+
+            wtLibname, full_seq = wtlib_dict[spacer_lookup]
             # print([wtLibname, spacer, mi, barcode, count])
             frwriter.writerow([wtLibname, spacer, mi, barcode, count])
 

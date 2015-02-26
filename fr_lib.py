@@ -50,11 +50,11 @@ def get_spacer(seq):
 
     Examples:
       >>> get_spacer("NGGGGCCCTCAGATCTCTCGTGTTTAAGAGCTATGCTGGAAACAGCATAGC")
-      'GGGGCCCTCAGATCTCTCGT'
+      'NGGGGCCCTCAGATCTCTCG'
 
     """
 
-    return seq[1:21]
+    return seq[:20]
 
 
 def get_barcode_mi(seq):
@@ -88,4 +88,4 @@ if __name__ == '__main__':
 
     print(f_seq, r_seq)
     assert get_barcode_mi(r_seq) == ('GCTATCCAAGTGCCTACCAA', 'TTAGGC')
-    assert get_spacer(f_seq) == 'GGGGCCCTCAGATCTCTCGT'
+    assert get_spacer(f_seq) == 'NGGGGCCCTCAGATCTCTCG'
