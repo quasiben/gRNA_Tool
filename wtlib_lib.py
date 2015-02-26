@@ -1,6 +1,14 @@
 import os
 from tables import *
 
+class memoize(object):
+    def __init__(self, f):
+        self.f = f
+        self.memo = {}
+    def __call__(self, *args):
+        if not args in self.memo:
+            self.memo[args] = self.f(*args)
+        return self.memo[args]
 
 def create_wtLibHDF5():
     class wtLib(IsDescription):
@@ -19,7 +27,7 @@ def create_wtLibHDF5():
             name, full_seq = [f.readline().strip() for i in range(2)]
             if name == "":
                 break
-            spacer = full_seq[1:21]
+            spacer = full_seq[1:20]
 
             wtlib['name'] = name
             wtlib['full_seq'] = full_seq
@@ -28,12 +36,12 @@ def create_wtLibHDF5():
 
     table.flush()
     table.cols.spacer.createCSIndex()
-    condition = '(spacer == "GAGGTGTATTGAACACGTGG")'
+    condition = '(spacer == "CTCGACTACGTGTACGGAG")'
     row = [(x['name'], x['full_seq']) for x in table.where(condition)]
     print(row[0])
     h5file.close()
 
-
+@memoize
 def get_wtlib_index():
     """Convenience function to return in memory
     dictionary of wtlib data. index is the spacer
@@ -47,7 +55,7 @@ def get_wtlib_index():
 
     d = {}
     with open("wtLib.fa") as f:
-        print("Storing wtLib in dict")
+        # print("Storing wtLib in dict")
         while True:
             name, full_seq = [f.readline().strip() for i in range(2)]
             if name == "":
@@ -88,13 +96,13 @@ if __name__ == '__main__':
 
     h5file = open_file("wtLib.h5", mode="r")
     table = h5file.root.data.seq
-    data = spacer_lookup("CCGCCCCCAAACCTCGAGCG", table)
+    data = spacer_lookup("CTCGACTACGTGTACGGAG", table)
     print(data)
 
-    test_name = ">hsa-mir-219a-1_hsa_EDIT_wgcod_1__015026"
+    test_name = ">KLHL35_hsa_EDIT_wgcod_3__048774"
     name, full_seq = data
     assert name == test_name
 
-    name, full_seq = get_wtlib_index()['CCGCCCCCAAACCTCGAGCG']
+    name, full_seq = get_wtlib_index()['CTCGACTACGTGTACGGAG']
     print(name)
     assert name == test_name
