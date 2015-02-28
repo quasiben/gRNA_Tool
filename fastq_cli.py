@@ -53,9 +53,8 @@ def process_gRNA(forward_path, reverse_path):
 
         spacer = fr_lib.get_spacer(f_seq)
         barcode, mi = fr_lib.get_barcode_mi(r_seq)
-        spacer_lookup = spacer[1:]  # offset because N precedes many spacers
 
-        if wtlib_dict.get(spacer_lookup):
+        if wtlib_dict.get(spacer):
 
             # skip if mi is invalid
             if mi not in MIs:
@@ -79,9 +78,8 @@ def process_gRNA(forward_path, reverse_path):
 
         for k, count in counter_dict.iteritems():
             spacer, barcode, mi = k.split("$")
-            spacer_lookup = spacer[1:]  # offset because N precedes many spacers
 
-            wtLibname, full_seq = wtlib_dict[spacer_lookup]
+            wtLibname, full_seq = wtlib_dict[spacer]
             # print([wtLibname, spacer, mi, barcode, count])
             frwriter.writerow([wtLibname, spacer, mi, barcode, count])
 

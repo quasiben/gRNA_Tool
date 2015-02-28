@@ -27,7 +27,7 @@ def create_wtLibHDF5():
             name, full_seq = [f.readline().strip() for i in range(2)]
             if name == "":
                 break
-            spacer = full_seq[1:20]
+            spacer = full_seq[:20]
 
             wtlib['name'] = name
             wtlib['full_seq'] = full_seq
@@ -36,7 +36,7 @@ def create_wtLibHDF5():
 
     table.flush()
     table.cols.spacer.createCSIndex()
-    condition = '(spacer == "CTCGACTACGTGTACGGAG")'
+    condition = '(spacer == "GCTCGACTACGTGTACGGAG")'
     row = [(x['name'], x['full_seq']) for x in table.where(condition)]
     print(row[0])
     h5file.close()
@@ -63,7 +63,7 @@ def get_wtlib_index():
 
             # offset because space in forward file
             # is often preceded with N
-            spacer = full_seq[1:20]
+            spacer = full_seq[:20]
 
             d[spacer] = (name, full_seq)
 
@@ -96,13 +96,13 @@ if __name__ == '__main__':
 
     h5file = open_file("wtLib.h5", mode="r")
     table = h5file.root.data.seq
-    data = spacer_lookup("CTCGACTACGTGTACGGAG", table)
+    data = spacer_lookup("GCTCGACTACGTGTACGGAG", table)
     print(data)
 
     test_name = ">KLHL35_hsa_EDIT_wgcod_3__048774"
     name, full_seq = data
     assert name == test_name
 
-    name, full_seq = get_wtlib_index()['CTCGACTACGTGTACGGAG']
+    name, full_seq = get_wtlib_index()['GCTCGACTACGTGTACGGAG']
     print(name)
     assert name == test_name
