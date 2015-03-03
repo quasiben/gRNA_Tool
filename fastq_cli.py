@@ -70,7 +70,7 @@ def process_gRNA(forward_path, reverse_path):
     output_file = output_file+".csv"
 
     with open(output_file, 'w') as csvfile:
-        print("\tWriting Output: {}".format(output_file))
+        print "\tWriting Output: ", output_file
 
         header = ["wtLibname", "spacer", "MI", "barcode", "count"]
         frwriter = csv.writer(csvfile, delimiter=',')
@@ -105,7 +105,8 @@ def main():
         return izip(a, a)
 
     for f, r in pairwise(files):
-        print("Processing Files: {} {} ".format(f, r))
+        print "Processing Files: ", f, r
+
         process_gRNA(f, r)
 
 if __name__ == '__main__':

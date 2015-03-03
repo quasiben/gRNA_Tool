@@ -82,7 +82,7 @@ if __name__ == '__main__':
     forward_path = os.path.join(ROOT, "forward.fastq.gz")
     reverse_path = os.path.join(ROOT, "reverse.fastq.gz")
 
-    print("One Chunk")
+    print "One Chunk"
     f_seq, r_seq = streaming_open(forward=forward_path,
                                   reverse=reverse_path).next()
 
