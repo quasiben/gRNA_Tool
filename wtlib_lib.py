@@ -1,5 +1,9 @@
 import os
-from tables import *
+
+try:
+    from tables import *
+except ImportError:
+    pass
 
 class memoize(object):
     def __init__(self, f):
