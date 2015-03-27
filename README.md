@@ -23,7 +23,7 @@ optional arguments:
 ## Examples
 
 ```
-python fastq_cli.py wtLib.fa --fwd=forward.fastq.gz --rev=reverse.fastq.gz
-python fastq_cli.py library.fa -d 150226_D00108_0322_AC6F9UANXX_Project_mcmanusm-MB11/Sample_Baseline/ --parallel
-
+python fastq_cli.py wtLib.fa --fwd=forward.fastq.gz --rev=reverse.fastq.gz # process 2 files 
+python fastq_cli.py library.fa -d 150226_D00108_0322_AC6F9UANXX_Project_mcmanusm-MB11/Sample_Baseline/  # using a directory
+python fastq_cli.py library.fa -d 150226_D00108_0322_AC6F9UANXX_Project_mcmanusm-MB11/Sample_Baseline/ --parallel # with parallel
 ```
