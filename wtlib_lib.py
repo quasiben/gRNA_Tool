@@ -46,7 +46,7 @@ def create_wtLibHDF5():
     h5file.close()
 
 @memoize
-def get_wtlib_index():
+def get_wtlib_index(wtlib_file="wtLib.fa"):
     """Convenience function to return in memory
     dictionary of wtlib data. index is the spacer
 
@@ -58,7 +58,8 @@ def get_wtlib_index():
     """
 
     d = {}
-    with open("wtLib.fa") as f:
+    print(wtlib_file)
+    with open(wtlib_file) as f:
         # print("Storing wtLib in dict")
         while True:
             name, full_seq = [f.readline().strip() for i in range(2)]
